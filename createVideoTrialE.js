@@ -120,6 +120,15 @@ $("#seeMyVideoBtn").on('click', function(){
       })
 
     function create_video() {
+
+      if (signedIn == true) {
+        $('#redeemed').show();
+               $(".form-wrap-inner").hide()
+
+      }
+else {
+
+
     
         var formErrors = false;
         fV.script = $('#video-script').val();
@@ -161,18 +170,11 @@ $("#seeMyVideoBtn").on('click', function(){
           }
         return false;
       }
-    }
-    
+    }}
 
     function see_my_video() {
 
     
-      if (signedIn) {
-        $('#redeemed').show();
-               $(".form-wrap-inner").hide()
-
-      }
-else {
 
     
     console.log("CLICK")
