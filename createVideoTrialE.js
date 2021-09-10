@@ -123,7 +123,7 @@ $("#seeMyVideoBtn").on('click', function(){
 
       if (signedIn == true) {
         $('#redeemed').show();
-               $(".form-wrap-inner").hide()
+       
 
       }
 else {
