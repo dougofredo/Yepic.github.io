@@ -20,7 +20,9 @@
     }
     
  
-
+    MemberStack.onReady.then(function(member) {   
+      signedIn = member.loggedIn 
+  })
 
     
     
