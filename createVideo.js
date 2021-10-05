@@ -150,7 +150,7 @@ function send_request() {
       formErrors = true;
       $('.form-name-wrap').css(redBorderCss);
     }
-    if (fV.script.length < 3) {
+    if (fV.script.length < 3 || fV.voice !="custom") {
       formErrors = true;
       $('#video-script').css(redBorderCss);
     }
@@ -357,17 +357,27 @@ var _previewAudio;
 
 
 function previewListen() {
-if (previewDisabled == false){
-fV.script = $('#video-script').val();
-var settings = {
-"url": "https://speech2vid-api.nw.r.appspot.com/audio/preview",
-"method": "POST",
-"timeout": 0,
-"headers": {
-"Content-Type": "application/json"
-},
-"data": JSON.stringify({"voice":fV.voice,"script": fV.script}),
+
+if (!scriptApproved) {
+
+  $("#aboveScript").text("Your script violates our Terms & Conditions. Content of discriminatory, sexual, hateful, criminal or political nature will not be generated.")
+  $("#aboveScript").css(redBorderCss);
+
 }
+else {
+  $("#aboveScript").text("Audio preview can take up to 10 seconds for some voices. We are working on a fix.")
+  $("#aboveScript").css({borderColor: "transparent"});
+  if (previewDisabled == false){
+  fV.script = $('#video-script').val();
+  var settings = {
+  "url": "https://speech2vid-api.nw.r.appspot.com/audio/preview",
+  "method": "POST",
+  "timeout": 0,
+  "headers": {
+  "Content-Type": "application/json"
+  },
+  "data": JSON.stringify({"voice":fV.voice,"script": fV.script}),
+  }
 
 
 if (!previewPaused) {
@@ -397,7 +407,7 @@ _previewAudio.play().then(_ => {
 else {
 console.log("Preview Listen is disabled");  }
 }
-
+}
 
 
 
@@ -427,11 +437,6 @@ function removePositionCss() {
   removePositionCss();
   $('.preview-img-wrap').addClass('preview-img-right')
   });
-
-
-
-
-
 
   async function uploadAudio(){
         var fileName = (Date.now()).toString() + "T." +  ff[0].name.split(".")[1];
@@ -558,3 +563,17 @@ $($($(".preview-bg")[0])[0]).css({backgroundImage : defaultBackground , opacity:
 
 })
 
+var scriptApproved = 0;
+
+async function checkForAbuse()  {                      
+
+$.get({
+    url :  'https://us-central1-speech2vid-api.cloudfunctions.net/checkForAbuse?content=' +  fV.script,
+
+                  success: function(approval) {
+                    scriptApproved = approval
+                  }, error: function() {
+                      alert("Something went wrong, try again!");
+                  }
+              })
+            }
