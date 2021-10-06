@@ -226,9 +226,9 @@ $("#seeMyVideoBtn").on('click', function(){
       $('#E-mail').css(redBorderCss);
     }
    
-    if (fV.pwd.length < 7) {
+    if (fV.pwd.length < 8) {
       formErrors = true;
-      $('#E-mail').css(redBorderCss);
+      $('#Password').css(redBorderCss);
     }
 
     if (!formErrors && !submitted) {
