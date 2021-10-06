@@ -150,7 +150,7 @@ function send_request() {
       formErrors = true;
       $('.form-name-wrap').css(redBorderCss);
     }
-    if (fV.script.length < 3 || fV.voice !="custom") {
+    if (fV.script.length < 3 && fV.voice !="custom") {
       formErrors = true;
       $('#video-script').css(redBorderCss);
     }
