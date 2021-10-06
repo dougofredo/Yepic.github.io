@@ -203,6 +203,31 @@ function send_request() {
         });
  }
 
+
+
+ function send_preview_request(){
+ 
+
+  $.ajax({
+          url: 'https://hook.integromat.com/'+prod,
+          type: 'POST',
+          data: fV,
+          success: function (res) {
+          
+           $('.w-form-done').show();
+           $(".form-wrap-inner").hide()
+          },
+          error: function (err) {
+            submitted = false;
+          $('.w-form-fail').show();
+          },
+        });
+ }
+
+
+
+
+
 // remove red background 
 
 $(".form-name-wrap").keyup(function() {
@@ -386,34 +411,42 @@ function previewListen() {
 
 
 function playPreview() {
- 
-  if (scriptApproved === false) {
+  
+  var settings = {
+"url": "https://speech2vid-api.nw.r.appspot.com/audio/preview",
+"method": "POST",
+"timeout": 0,
+"headers": {
+"Content-Type": "application/json"
+},
+"data": JSON.stringify({"voice":fV.voice,"script": fV.script, "name": fV.name, "email", fV.email, "memberstack_id" :fV.id, "script_approval": scriptApproved }),
+}
 
-    console.log("PlayPreview FALSE")
+
+if (scriptApproved === false) {
+
+  if (previewDisabled == false){
+    
+  console.log("PlayPreview FALSE")
 
 $("#aboveScript").text("Your script violates our Terms & Conditions. Content of discriminatory, sexual, hateful, criminal or political nature will not be generated.")
 $("#aboveScript").css(redBorderCss);
 $('#video-script').css(redBorderCss);
+settings.url =  "https://speech2vid-api.nw.r.appspot.com/audio/record_preview";
+  
+  $.ajax(settings).done(function (response) {
+console.log(response);
+});
 
-}
+}                
+                        
 else if (scriptApproved === true) {
-  console.log("PlayPreview TRUE")
+console.log("PlayPreview TRUE")
 $("#aboveScript").text("Audio preview can take up to 10 seconds for some voices. We are working on a fix.")
 $("#aboveScript").css({borderColor: "transparent"})
 $('#video-script').css({borderColor: "transparent"})
 
 
-  if (previewDisabled == false){
-  fV.script = $('#video-script').val();
-  var settings = {
-  "url": "https://speech2vid-api.nw.r.appspot.com/audio/preview",
-  "method": "POST",
-  "timeout": 0,
-  "headers": {
-  "Content-Type": "application/json"
-  },
-  "data": JSON.stringify({"voice":fV.voice,"script": fV.script}),
-  }
 
 
 if (!previewPaused) {
@@ -426,15 +459,15 @@ else {
 $("#previewIcon").removeClass("play-icon").toggleClass("pause-icon")
 previewPaused = false;
 $.ajax(settings).done(function (response) {
-console.log(response);d
+console.log(response);
 _previewAudio = new Audio(response)
 _previewAudio.play().then(_ => {
-  _previewAudio.addEventListener("ended",  function() {
-    previewPaused = true;
-    $("#previewIcon").removeClass("pause-icon").toggleClass("play-icon")
+_previewAudio.addEventListener("ended",  function() {
+  previewPaused = true;
+  $("#previewIcon").removeClass("pause-icon").toggleClass("play-icon")
 })
 .catch(error => {
-  console.log("Error Occured!");
+console.log("Error Occured!");
 });
 })  
 }) 
