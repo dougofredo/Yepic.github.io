@@ -534,7 +534,8 @@ async function handleAudio(event) {
     $("#audioPlayer").attr("src",uploadAudioFile);
   //  document.getElementById("audioElem").load();
   //  _player.onload = function() {
-      fV.script = "custom";
+      fV.voice = "custom";
+      fV.script = 0;
       $("#customAudio").show();
       $("#deleteAudio").show()
       $("#audioUploadName").html(audioFileName);
