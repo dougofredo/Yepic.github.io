@@ -426,7 +426,7 @@ else {
 $("#previewIcon").removeClass("play-icon").toggleClass("pause-icon")
 previewPaused = false;
 $.ajax(settings).done(function (response) {
-console.log(response);d
+// console.log(response);d
 _previewAudio = new Audio(response)
 _previewAudio.play().then(_ => {
   _previewAudio.addEventListener("ended",  function() {
