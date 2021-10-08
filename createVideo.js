@@ -412,15 +412,15 @@ function previewListen() {
 
 function playPreview() {
   console.log('test')
-  console.log(fV)
-  var settings = {
-"url": "https://speech2vid-api.nw.r.appspot.com/audio/preview",
-"method": "POST",
-"timeout": 0,
-"headers": {
-"Content-Type": "application/json"
-},
-"data": JSON.stringify({"voice":fV.voice,"script": fV.script, "name": fV.name, "email", fV.email, "memberstack_id" :fV.id, "script_approval": scriptApproved }),
+//   console.log(fV)
+//   var settings = {
+// "url": "https://speech2vid-api.nw.r.appspot.com/audio/preview",
+// "method": "POST",
+// "timeout": 0,
+// "headers": {
+// "Content-Type": "application/json"
+// },
+// "data": JSON.stringify({"voice":fV.voice,"script": fV.script, "name": fV.name, "email", fV.email, "memberstack_id" :fV.id, "script_approval": scriptApproved }),
 }
 
 
