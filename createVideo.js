@@ -405,6 +405,13 @@ function previewListen() {
 }
 
 function playPreview() {
+  console.log("in playpreview");
+  console.log("in playpreview");
+  console.log("in playpreview");
+  console.log("in playpreview");
+  console.log("in playpreview");
+  console.log("in playpreview");
+  console.log("in playpreview");
   var settings = {
     url: "https://speech2vid-api.nw.r.appspot.com/audio/preview",
     method: "POST",
