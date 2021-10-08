@@ -21,11 +21,9 @@ var fV = {
   background: "office-background-FHD.png",
 }
 
-console.log(fv);
 
 
 function pairActorVoice(){
-  console.log('in pairActorVoice');
 
     fV.voice = voiceActorPair[fV.actor]
     $("[data-voice]").css({borderColor: "transparent"});
@@ -34,7 +32,6 @@ function pairActorVoice(){
 
 
 function selectImages() {
-  console.log('in selectImages');
 $(".preview-img-wrap").css("opacity", 1);
 $("[data-actor='Alex']").css(borderCss);
 $($('.actor-pos-mid')).css(borderCss);
@@ -45,7 +42,6 @@ $($($(".preview-bg")[0])[0]).css({backgroundImage : defaultBackground , opacity:
 };
 
 function startUpSelection(){
-  console.log('in startUpSelection');
     pairActorVoice();
     selectImages();
 
@@ -53,8 +49,7 @@ function startUpSelection(){
 
 setTimeout(startUpSelection, 1000);
 
-function checkListenPreview()  { 
-  console.log('in checkListenPreview ')      
+function checkListenPreview()  {       
 if (scriptLengthOk && fV.voice != 0){
   previewDisabled = false;
     $("#previewPlayBtn").css({opacity: 1});
@@ -64,7 +59,6 @@ if (scriptLengthOk && fV.voice != 0){
   }
 
 function previewCustomUpload() {
-  console.log('previewCustomUpload')
 fV.background = "custom"
 var newSrc = $('#customBackground').children("img").attr("src");
 var newURL = "url(" + fV.link + ")" ; 
@@ -208,31 +202,6 @@ function send_request() {
           },
         });
  }
-
-
-
- function send_preview_request(){
- 
-
-  $.ajax({
-          url: 'https://hook.integromat.com/'+prod,
-          type: 'POST',
-          data: fV,
-          success: function (res) {
-          
-           $('.w-form-done').show();
-           $(".form-wrap-inner").hide()
-          },
-          error: function (err) {
-            submitted = false;
-          $('.w-form-fail').show();
-          },
-        });
- }
-
-
-
-
 
 // remove red background 
 
@@ -417,43 +386,34 @@ function previewListen() {
 
 
 function playPreview() {
-  console.log('test')
-//   console.log(fV)
-//   var settings = {
-// "url": "https://speech2vid-api.nw.r.appspot.com/audio/preview",
-// "method": "POST",
-// "timeout": 0,
-// "headers": {
-// "Content-Type": "application/json"
-// },
-// "data": JSON.stringify({"voice":fV.voice,"script": fV.script, "name": fV.name, "email", fV.email, "memberstack_id" :fV.id, "script_approval": scriptApproved }),
-}
+ 
+  if (scriptApproved === false) {
 
-
-if (scriptApproved === false) {
-
-  if (previewDisabled == false){
-    
-  console.log("PlayPreview FALSE")
+    console.log("PlayPreview FALSE")
 
 $("#aboveScript").text("Your script violates our Terms & Conditions. Content of discriminatory, sexual, hateful, criminal or political nature will not be generated.")
 $("#aboveScript").css(redBorderCss);
 $('#video-script').css(redBorderCss);
-settings.url =  "https://speech2vid-api.nw.r.appspot.com/audio/record_preview";
-  
-  $.ajax(settings).done(function (response) {
-console.log(response);
-});
 
-}                
-                        
+}
 else if (scriptApproved === true) {
-console.log("PlayPreview TRUE")
+  console.log("PlayPreview TRUE")
 $("#aboveScript").text("Audio preview can take up to 10 seconds for some voices. We are working on a fix.")
 $("#aboveScript").css({borderColor: "transparent"})
 $('#video-script').css({borderColor: "transparent"})
 
 
+  if (previewDisabled == false){
+  fV.script = $('#video-script').val();
+  var settings = {
+  "url": "https://speech2vid-api.nw.r.appspot.com/audio/preview",
+  "method": "POST",
+  "timeout": 0,
+  "headers": {
+  "Content-Type": "application/json"
+  },
+  "data": JSON.stringify({"voice":fV.voice,"script": fV.script}),
+  }
 
 
 if (!previewPaused) {
@@ -466,15 +426,15 @@ else {
 $("#previewIcon").removeClass("play-icon").toggleClass("pause-icon")
 previewPaused = false;
 $.ajax(settings).done(function (response) {
-console.log(response);
+console.log(response);d
 _previewAudio = new Audio(response)
 _previewAudio.play().then(_ => {
-_previewAudio.addEventListener("ended",  function() {
-  previewPaused = true;
-  $("#previewIcon").removeClass("pause-icon").toggleClass("play-icon")
+  _previewAudio.addEventListener("ended",  function() {
+    previewPaused = true;
+    $("#previewIcon").removeClass("pause-icon").toggleClass("play-icon")
 })
 .catch(error => {
-console.log("Error Occured!");
+  console.log("Error Occured!");
 });
 })  
 }) 
@@ -574,8 +534,7 @@ async function handleAudio(event) {
     $("#audioPlayer").attr("src",uploadAudioFile);
   //  document.getElementById("audioElem").load();
   //  _player.onload = function() {
-      fV.voice = "custom";
-      fV.script = 0;
+      fV.script = "custom";
       $("#customAudio").show();
       $("#deleteAudio").show()
       $("#audioUploadName").html(audioFileName);
