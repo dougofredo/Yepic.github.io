@@ -480,7 +480,7 @@ $(".actor-pos-right").click(function () {
 
 
 
-async function uploadAudio() 
+async function uploadAudio() {
   console.log('hi')
   var fileName = Date.now().toString() + "T." + ff[0].name.split(".")[1];
   $.ajax({
