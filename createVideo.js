@@ -411,7 +411,8 @@ function previewListen() {
 
 
 function playPreview() {
-  
+  console.log('test')
+  console.log(fV)
   var settings = {
 "url": "https://speech2vid-api.nw.r.appspot.com/audio/preview",
 "method": "POST",
