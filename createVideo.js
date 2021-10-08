@@ -21,9 +21,11 @@ var fV = {
   background: "office-background-FHD.png",
 }
 
+console.log(fv);
 
 
 function pairActorVoice(){
+  console.log('in pairActorVoice');
 
     fV.voice = voiceActorPair[fV.actor]
     $("[data-voice]").css({borderColor: "transparent"});
@@ -32,6 +34,7 @@ function pairActorVoice(){
 
 
 function selectImages() {
+  console.log('in selectImages');
 $(".preview-img-wrap").css("opacity", 1);
 $("[data-actor='Alex']").css(borderCss);
 $($('.actor-pos-mid')).css(borderCss);
@@ -42,6 +45,7 @@ $($($(".preview-bg")[0])[0]).css({backgroundImage : defaultBackground , opacity:
 };
 
 function startUpSelection(){
+  console.log('in startUpSelection');
     pairActorVoice();
     selectImages();
 
@@ -49,7 +53,8 @@ function startUpSelection(){
 
 setTimeout(startUpSelection, 1000);
 
-function checkListenPreview()  {       
+function checkListenPreview()  { 
+  console.log('in checkListenPreview ')      
 if (scriptLengthOk && fV.voice != 0){
   previewDisabled = false;
     $("#previewPlayBtn").css({opacity: 1});
@@ -59,6 +64,7 @@ if (scriptLengthOk && fV.voice != 0){
   }
 
 function previewCustomUpload() {
+  console.log('previewCustomUpload')
 fV.background = "custom"
 var newSrc = $('#customBackground').children("img").attr("src");
 var newURL = "url(" + fV.link + ")" ; 
