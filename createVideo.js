@@ -410,6 +410,7 @@ function playPreview() {
   var settings = {
     url: "https://speech2vid-api.nw.r.appspot.com/audio/preview",
     method: "POST",
+    crossDomain: true,
     timeout: 0,
     headers: {
       "Content-Type": "application/json",
