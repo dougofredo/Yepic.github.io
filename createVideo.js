@@ -424,14 +424,80 @@ function playPreview() {
     }),
   };
 
-  if (scriptApproved === false) {
-    console.log("PlayPreview FALSE");
+  // if (scriptApproved === false) {
+  //   console.log("PlayPreview FALSE");
 
-    $("#aboveScript").text(
-      "Your script violates our Terms & Conditions. Content of discriminatory, sexual, hateful, criminal or political nature will not be generated."
-    );
-    $("#aboveScript").css(redBorderCss);
-    $("#video-script").css(redBorderCss);
+  //   $("#aboveScript").text(
+  //     "Your script violates our Terms & Conditions. Content of discriminatory, sexual, hateful, criminal or political nature will not be generated."
+  //   );
+  //   $("#aboveScript").css(redBorderCss);
+  //   $("#video-script").css(redBorderCss);
+  // } else if (scriptApproved === true) {
+  //   console.log("PlayPreview TRUE");
+  //   $("#aboveScript").text(
+  //     "Audio preview can take up to 10 seconds for some voices. We are working on a fix."
+  //   );
+  //   $("#aboveScript").css({ borderColor: "transparent" });
+  //   $("#video-script").css({ borderColor: "transparent" });
+
+  //   if (previewDisabled == false) {
+  //     fV.script = $("#video-script").val();
+  //     var settings = {
+  //       url: "https://speech2vid-api.nw.r.appspot.com/audio/preview",
+  //       method: "POST",
+  //       timeout: 0,
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //       },
+  //       data: JSON.stringify({ voice: fV.voice, script: fV.script }),
+  //     };
+
+  //     if (!previewPaused) {
+  //       _previewAudio.pause();
+
+  //       previewPaused = true;
+  //       $("#previewIcon").removeClass("pause-icon").toggleClass("play-icon");
+  //     } else {
+  //       $("#previewIcon").removeClass("play-icon").toggleClass("pause-icon");
+  //       previewPaused = false;
+  //       $.ajax(settings).done(function (response) {
+  //         // console.log(response);d
+  //         _previewAudio = new Audio(response);
+  //         _previewAudio.play().then((_) => {
+  //           _previewAudio
+  //             .addEventListener("ended", function () {
+  //               previewPaused = true;
+  //               $("#previewIcon")
+  //                 .removeClass("pause-icon")
+  //                 .toggleClass("play-icon");
+  //             })
+  //             .catch((error) => {
+  //               console.log("Error Occured!");
+  //             });
+  //         });
+  //       });
+  //     }
+  //   } else {
+  //     console.log("Preview Listen is disabled");
+  //   }
+  // }
+
+  if (scriptApproved === false) {
+    if (previewDisabled == false) {
+      console.log("PlayPreview FALSE");
+
+      $("#aboveScript").text(
+        "Your script violates our Terms & Conditions. Content of discriminatory, sexual, hateful, criminal or political nature will not be generated."
+      );
+      $("#aboveScript").css(redBorderCss);
+      $("#video-script").css(redBorderCss);
+      settings.url =
+        "https://speech2vid-api.nw.r.appspot.com/audio/record_preview";
+
+      $.ajax(settings).done(function (response) {
+        console.log(response);
+      });
+    }
   } else if (scriptApproved === true) {
     console.log("PlayPreview TRUE");
     $("#aboveScript").text(
@@ -440,46 +506,33 @@ function playPreview() {
     $("#aboveScript").css({ borderColor: "transparent" });
     $("#video-script").css({ borderColor: "transparent" });
 
-    if (previewDisabled == false) {
-      fV.script = $("#video-script").val();
-      var settings = {
-        url: "https://speech2vid-api.nw.r.appspot.com/audio/preview",
-        method: "POST",
-        timeout: 0,
-        headers: {
-          "Content-Type": "application/json",
-        },
-        data: JSON.stringify({ voice: fV.voice, script: fV.script }),
-      };
+    if (!previewPaused) {
+      _previewAudio.pause();
 
-      if (!previewPaused) {
-        _previewAudio.pause();
-
-        previewPaused = true;
-        $("#previewIcon").removeClass("pause-icon").toggleClass("play-icon");
-      } else {
-        $("#previewIcon").removeClass("play-icon").toggleClass("pause-icon");
-        previewPaused = false;
-        $.ajax(settings).done(function (response) {
-          // console.log(response);d
-          _previewAudio = new Audio(response);
-          _previewAudio.play().then((_) => {
-            _previewAudio
-              .addEventListener("ended", function () {
-                previewPaused = true;
-                $("#previewIcon")
-                  .removeClass("pause-icon")
-                  .toggleClass("play-icon");
-              })
-              .catch((error) => {
-                console.log("Error Occured!");
-              });
-          });
-        });
-      }
+      previewPaused = true;
+      $("#previewIcon").removeClass("pause-icon").toggleClass("play-icon");
     } else {
-      console.log("Preview Listen is disabled");
+      $("#previewIcon").removeClass("play-icon").toggleClass("pause-icon");
+      previewPaused = false;
+      $.ajax(settings).done(function (response) {
+        console.log(response);
+        _previewAudio = new Audio(response);
+        _previewAudio.play().then((_) => {
+          _previewAudio
+            .addEventListener("ended", function () {
+              previewPaused = true;
+              $("#previewIcon")
+                .removeClass("pause-icon")
+                .toggleClass("play-icon");
+            })
+            .catch((error) => {
+              console.log("Error Occured!");
+            });
+        });
+      });
     }
+  } else {
+    console.log("Preview Listen is disabled");
   }
 }
 
