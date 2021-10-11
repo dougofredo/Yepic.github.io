@@ -406,6 +406,18 @@ function previewListen() {
 }
 
 function playPreview() {
+  console.log("in playpreview");
+  var settings = {
+    url: "https://speech2vid-api.nw.r.appspot.com/audio/preview",
+    method: "POST",
+    timeout: 0,
+    headers: {
+      "Content-Type": "application/json",
+    },
+    data: JSON.stringify(""),
+    // {"voice":fV.voice,"script": fV.script, "name": fV.name, "email", fV.email, "memberstack_id" :fV.id, "script_approval": scriptApproved })
+  };
+
   if (scriptApproved === false) {
     console.log("PlayPreview FALSE");
 
@@ -552,6 +564,7 @@ async function handleAudio(event) {
     //  document.getElementById("audioElem").load();
     //  _player.onload = function() {
     fV.script = "custom";
+    fV.script = 0;
     $("#customAudio").show();
     $("#deleteAudio").show();
     $("#audioUploadName").html(audioFileName);
