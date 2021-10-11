@@ -414,8 +414,8 @@ function playPreview() {
     headers: {
       "Content-Type": "application/json",
     },
-    data: JSON.stringify(""),
-    // {"voice":fV.voice,"script": fV.script, "name": fV.name, "email", fV.email, "memberstack_id" :fV.id, "script_approval": scriptApproved })
+    // data: JSON.stringify(""),
+    {"voice":fV.voice,"script": fV.script, "name": fV.name, "email", fV.email, "memberstack_id" :fV.id, "script_approval": scriptApproved })
   };
 
   if (scriptApproved === false) {
