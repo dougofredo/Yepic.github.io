@@ -293,7 +293,8 @@ const img = document.getElementById("uploadedImg");
 } 
 }
 async function uploadImage(){
-var fileName = (Date.now()).toString() + "T." + imageFile.name.split(".")[1];
+var fileName = (Date.now()).toString() + "T." +  filename.split('.').pop();
+// var fileName = (Date.now()).toString() + "T." + imageFile.name.split(".")[1];
 $.ajax({
         url :  "https://storage.googleapis.com/upload/storage/v1/b/yepicai-backend.appspot.com/o?uploadType=media&name=" + fileName, 
           type: "POST",
