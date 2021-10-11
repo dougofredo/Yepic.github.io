@@ -414,6 +414,7 @@ function playPreview() {
     timeout: 0,
     headers: {
       "Content-Type": "application/json",
+      'Access-Control-Allow-Origin': '*'
     },
     data: JSON.stringify({
       voice: fV.voice,
